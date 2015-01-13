@@ -1,0 +1,14 @@
+{
+	"name": "formling",
+	"version": "0.0.1",
+	"description": "Simple interface and conventions for user input validation",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/srcagency/formling.git"
+	},
+	"dependencies": {
+		"bluebird": "2.6.4",
+		"extend": "2.0.0",
+		"debug": "2.1.1"
+	}
+}
