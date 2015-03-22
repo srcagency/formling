@@ -1,7 +1,7 @@
 'use strict';
 
 var Promise = require('bluebird');
-var extend = require('extend');
+var assign = require('object-assign');
 var debug = require('debug')('formling');
 
 module.exports = {
@@ -14,7 +14,7 @@ module.exports = {
 function decorate( ctor, opts ){
 	debug('%s.decorate', ctor.name);
 
-	extend(ctor, {
+	assign(ctor, {
 		InputError: InputError,
 		ValidationError: ValidationError,
 
@@ -22,7 +22,7 @@ function decorate( ctor, opts ){
 		validators: opts.validators,
 	});
 
-	extend(ctor.prototype, methods, {
+	assign(ctor.prototype, methods, {
 		// just shortcuts
 		fields: ctor.fields,
 		validators: ctor.validators,
