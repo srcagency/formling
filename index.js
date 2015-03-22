@@ -2,7 +2,7 @@
 
 var Promise = require('bluebird');
 var extend = require('extend');
-var debug = require('debug')('former');
+var debug = require('debug')('formling');
 
 module.exports = {
 	InputError: InputError,
