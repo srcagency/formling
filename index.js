@@ -34,13 +34,14 @@ var methods = {
 		debug('%s.submit', this.constructor.name);
 
 		return Promise
-			.try(this.fill, data, this)
+			.resolve(data)
 			.bind(this)
-			.then(this.validate)
-			.tap(function( e ){
-				if (e)
-					throw e;
-			});
+			.then(this.fill)
+			.tap(this.prepare)
+			.then(this.validateFields)
+			.tap(throwArgument)
+			.tap(this.apply)
+			.return(this);
 	},
 
 	fill: function( data ){
@@ -54,6 +55,14 @@ var methods = {
 	},
 
 	validate: function(){
+		return this
+			.prepare()
+			.bind(this)
+			.then(this.validateFields)
+			.tap(throwArgument);
+	},
+
+	validateFields: function(){
 		return Promise
 			.resolve(this.fields)
 			.bind(this)
@@ -72,7 +81,15 @@ var methods = {
 				.join(validator(this, this[field]), field)
 				.spread(normalize);
 	},
+
+	prepare: function(){},
+	apply: function(){},
 };
+
+function throwArgument( e ){
+	if (e)
+		throw e;
+}
 
 function normalize( i, field ){
 	// short circuit most common case
