@@ -7,7 +7,7 @@
 		"url": "https://github.com/srcagency/formling.git"
 	},
 	"dependencies": {
-		"bluebird": "^2.10.0",
+		"bluebird": "^2.10.1",
 		"object-assign": "^4.0.1",
 		"debug": "^2.2.0"
 	}
