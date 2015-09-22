@@ -55,8 +55,8 @@ var methods = {
 	},
 
 	validate: function(){
-		return this
-			.prepare()
+		return Promise
+			.resolve(this.prepare())
 			.bind(this)
 			.then(this.validateFields)
 			.tap(throwArgument);
