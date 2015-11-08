@@ -22,11 +22,7 @@ function decorate( ctor, opts ){
 		validators: opts.validators,
 	});
 
-	assign(ctor.prototype, methods, {
-		// just shortcuts
-		fields: ctor.fields,
-		validators: ctor.validators,
-	});
+	assign(ctor.prototype, methods);
 }
 
 var methods = {
@@ -48,7 +44,7 @@ var methods = {
 		var keys = Object.keys(data);
 
 		for (var i = keys.length - 1;i >= 0;i--)
-			if (!~this.fields.indexOf(keys[i]))
+			if (!~this.constructor.fields.indexOf(keys[i]))
 				throw new InputError(keys[i], 'Unknown key "' + keys[i] + '"');
 			else
 				this[keys[i]] = data[keys[i]];
@@ -64,7 +60,7 @@ var methods = {
 
 	validateFields: function(){
 		return Promise
-			.resolve(this.fields)
+			.resolve(this.constructor.fields)
 			.bind(this)
 			.map(this.validateField)
 			.filter(isDefined)
@@ -74,7 +70,7 @@ var methods = {
 	validateField: function( field ){
 		debug('%s.validateField with field name %s', this.constructor.name, field);
 
-		var validator = this.validators[field];
+		var validator = this.constructor.validators[field];
 
 		if (validator)
 			return Promise
